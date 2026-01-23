@@ -15,10 +15,19 @@ layer_t* network_add_dense(network_t *n, int in_size, int out_size, activation_t
 }
 
 void network_forward(network_t *n, const fx16_t *input) {
-    const fx16_t *inp = input;
-    for(int i=0; i<n->num_layers; i++) {
-        layer_forward(&n->layers[i], inp);
-        inp = n->layers[i].output;
+    const fx16_t *x = input;
+    for(int i=0;i<n->num_layers;i++) {
+        layer_forward(&n->layers[i], x);
+        x = n->layers[i].output;
+    }
+
+    if(n->auto_snapshot)
+        network_snapshot(n);
+}
+
+void network_snapshot(network_t *n) {
+    for(int i = 0; i < n->num_layers; i++) {
+        layer_snapshot(&n->layers[i]);
     }
 }
 

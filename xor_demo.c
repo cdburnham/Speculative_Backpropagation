@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include "network.h"
 #include "speculative_bp.h"
-#include "memory.h"  // for layer_memory_bytes/network_memory_bytes
+#include "memory.h"
 
-#define TRAINING_MAX_EPOCHS    5000
-#define TRAINING_LEARNING_RATE FX_FROM_FLOAT(0.05f)
-#define TRAINING_PRINT_EVERY   250
+#define TRAINING_MAX_EPOCHS    50000
+#define TRAINING_LEARNING_RATE FX_FROM_FLOAT(0.01f)
+#define TRAINING_PRINT_EVERY   5000
 
 static const int XOR_INPUTS_INT[4][2] = {
     {0,0},
@@ -41,7 +41,7 @@ static network_t net;
 static void build_xor_network() {
     network_init(&net);
     network_add_dense(&net, 2, 4, ACT_TANH);
-    network_add_dense(&net, 4, 1, ACT_SIGMOID);
+    network_add_dense(&net, 4, 1, ACT_LINEAR);
 }
 
 // -----------------------------------------
@@ -65,7 +65,6 @@ static void print_memory_report() {
 // Training loop
 // -----------------------------------------
 static void train_xor() {
-    int branch_choice = 0;
 
     for(int epoch=0; epoch<TRAINING_MAX_EPOCHS; epoch++){
         for(int i=0; i<4; i++){
@@ -73,18 +72,16 @@ static void train_xor() {
                 &net,
                 XOR_INPUTS[i],
                 XOR_TARGETS[i],
-                XOR_TARGETS[i],
-                TRAINING_LEARNING_RATE,
-                &branch_choice
+                TRAINING_LEARNING_RATE
             );
         }
 
         if(epoch % TRAINING_PRINT_EVERY == 0){
-            int loss = 0;
+            fx16_t loss = 0;
             for(int i=0;i<4;i++){
                 network_forward(&net, XOR_INPUTS[i]);
-                int d = net.layers[net.num_layers-1].output[0] - XOR_TARGETS[i][0];
-                loss += d*d;
+                fx16_t d = fx_sub(net.layers[net.num_layers-1].output[0], XOR_TARGETS[i][0]);
+                loss = fx_add(loss, fx_mul(d, d));
             }
             printf("Epoch %d  Loss=%.4f\n", epoch, FX_TO_FLOAT(loss));
         }
@@ -110,8 +107,9 @@ static void test_xor_outputs() {
 // Main
 // -----------------------------------------
 int main() {
+    convert_xor_dataset();
     build_xor_network();
-    print_memory_report();   // <-- print memory before training
+    print_memory_report();
     train_xor();
     test_xor_outputs();
     return 0;

@@ -11,8 +11,9 @@ typedef struct {
     fx16_t temp_weights[MAX_PARAMS];
 } spec_state_t;
 
-void speculative_forward_commit(network_t *n, const fx16_t *input,
-                                const fx16_t *target_a, const fx16_t *target_b,
-                                fx16_t lr, int *choice_out);
+void speculative_forward_commit(network_t *n,
+                                const fx16_t *input,
+                                const fx16_t *target,
+                                fx16_t lr);
 
 #endif
