@@ -17,18 +17,18 @@ V4 is a lightweight and static-memory C neural network library designed to be st
 
 - Allows modularized network synthesis on a variety of FPGA platforms supported by the Vitis/Vivado suite.
 - Performance and limitations vary depending on a given FPGA device's resource utilization.
- - - - (note) Future versions might want to interface with a user's resource utilization reports for proper guardrails.
+ - (note) Future versions might want to interface with a user's resource utilization reports for proper guardrails.
 - Program-defined:
- - - - Math library for activation functions and derivative dependencies.
- - - - Network structure best defined from JSON files.
- - - - Dense (fully-connected) layers only
- - - - Activations: `linear`, `tanh`, `sigmoid`, `relu`
- - - - Loss: `mse`
- - - - Optimizer: plain SGD
- - - - Training modes:
-  - - - Baseline SGD
-  - - - `spec1` (1-step delayed speculative-style schedule)
- - - -Static arrays in core NN path (Vitis-friendly)
+ - Math library for activation functions and derivative dependencies.
+ - Network structure best defined from JSON files.
+ - Dense (fully-connected) layers only
+ - Activations: `linear`, `tanh`, `sigmoid`, `relu`
+ - Loss: `mse`
+ - Optimizer: plain SGD
+  Training modes:
+ - Baseline SGD
+ - `spec1` (1-step delayed speculative-style schedule)
+- Static arrays in core NN path (Vitis-friendly)
 
 ## Repository directory structure...
 
@@ -130,7 +130,7 @@ Supported keys:
 
 The lightweight example below defines a 2-input model limited to four layers at a maximum width of 16 neurons. It explicitly defines two layers (1. hidden: 4 neurons, tanh activation; 2. output: 1 neuron, normalized sigmoid). Weights are initialized using the Xavier method (sampled from a range defined by the layer's size and scaled by an equation defined in script). A random seed ensures weight initialization is a reproducible process across different training sessions. The loss function is MSE and utilizes a learning rate of 0.1 training at a maximum of 3000 epochs, printing its progress every 300 epochs. It uses spec1 mode to schedule training (more detail below).
 
-```json example
+```json
 {
   "max_layers": 4,
   "max_width": 16,
