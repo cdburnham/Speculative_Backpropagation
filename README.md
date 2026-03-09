@@ -160,7 +160,7 @@ Follow these guidelines to ensure you're working within the program's limits:
 - Ensure each layer's `out_dim` is valid.
 - Use stable `lr` first (start small, e.g. `0.01` to `0.1` depending on network depth).
 
-### After you've made your configuration file:
+### Step 1: Adjust your configuration file and train it:
 
 ```bash
 ./xor_json_from_file data/models/my_model.json
@@ -171,7 +171,7 @@ Validate it by confirming:
 - Loss decreases as epochs increase.
 - Final predictions align with supplied targets.
 
-### Step C: Compare SGD vs Spec1 Timing
+### Step 2: Compare SGD vs Spec1 Timing
 
 ```bash
 ./xor_compare_csv data/models/my_model.json data/results/my_model_compare.csv 5000
@@ -182,7 +182,7 @@ Compare and validate the two training modes against each other:
 - Validate that both models' losses are finite and decreasing.
 - Note the repeat factor affects time recording trends (to reduce timer noise).
 
-### Step D: Analyze CSV
+### Step 3: Analyze CSV
 
 My preference is Excel or RainbowCSV for quick CSV analysis:
 
@@ -192,7 +192,7 @@ The following figures are helpful for a basic analysis of performance and baseli
 - Mean and median speed ratio across steady-state epochs
 - Loss gap across modes
 
-### Step E: Refine and reiterate
+### Step 4: Refine and reiterate
 
 Adjust your JSON configuration's values such as:
 
@@ -201,7 +201,7 @@ Adjust your JSON configuration's values such as:
 - Learning rate
 - Repeat factor for benchmarking
 
-Re-run Steps B-D and identify changes in loss and timing trends.
+Re-run Steps 1-3 and identify changes in loss and timing trends.
 
 ## For those using Vitis...
 
