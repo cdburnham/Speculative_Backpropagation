@@ -1,8 +1,8 @@
 ## Speculative Backpropagation NN Library
 
 ## Built by: Cameron Burnham (camdburnham@icloud.com)
-## Advised by: Arnab Purkayastha (ap)
-## Sponsored by: 
+## Advised by: Arnab Purkayastha (arnab.purkayastha@wne.edu)
+## Sponsored by: Ray Simar of Rice University (rs23@rice.edu)
 
 ## Git Status...
 
