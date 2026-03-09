@@ -1,12 +1,13 @@
-#ifndef NN_MEMORY_H
+#ifndef NN_MEMORY_H // include guard
 #define NN_MEMORY_H
 
-#include "nn_network.h"
+#include "nn_network.h" // include nn_net_t and related functions
 
-#ifdef __cplusplus
+#ifdef __cplusplus // declare C linkage for C++ compilers
 extern "C" {
 #endif
 
+// Memory report structures and functions
 typedef struct {
     size_t params_bytes;
     size_t grads_bytes;
@@ -15,6 +16,7 @@ typedef struct {
     size_t total_bytes;
 } nn_layer_mem_t;
 
+// This structure holds memory usage estimates for each layer and totals for the whole network.
 typedef struct {
     nn_layer_mem_t* per_layer;
     size_t total_params;
@@ -24,11 +26,14 @@ typedef struct {
     size_t total_all;
 } nn_mem_report_t;
 
+// PROTOTYPE:
+
+// Estimates memory usage for a given network. If include_spec_cache is nonzero, includes speculative cache in the report.
 nn_status_t nn_net_estimate_memory(const nn_net_t* net, int include_spec_cache, nn_mem_report_t* report);
 void nn_print_mem_report(const nn_net_t* net, const nn_mem_report_t* report);
 
 #ifdef __cplusplus
 }
-#endif
+#endif // end of C linkage
 
-#endif
+#endif // end of include guard

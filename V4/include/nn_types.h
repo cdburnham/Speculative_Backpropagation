@@ -1,10 +1,10 @@
-#ifndef NN_TYPES_H
+#ifndef NN_TYPES_H // include guard
 #define NN_TYPES_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <stddef.h> // include size_t
+#include <stdint.h> // include uint32_t
 
-#ifdef __cplusplus
+#ifdef __cplusplus // declare C linkage for C++ compilers
 extern "C" {
 #endif
 
@@ -15,7 +15,7 @@ extern "C" {
 
 typedef NN_SCALAR_T nn_scalar_t;
 
-// Status codes
+// Status codes for function return values
 typedef enum {
     NN_OK = 0,
     NN_ERR_BADARG = 1,
@@ -24,7 +24,7 @@ typedef enum {
     NN_ERR_UNSUPPORTED = 4
 } nn_status_t;
 
-// Activation types
+// Activation function types
 typedef enum {
     NN_ACT_LINEAR = 0,
     NN_ACT_TANH   = 1,
@@ -32,16 +32,16 @@ typedef enum {
     NN_ACT_RELU   = 3
 } nn_activation_t;
 
-// Loss types
+// Loss function types
 typedef enum {
     NN_LOSS_MSE = 0
 } nn_loss_t;
 
-// Init types
+// Initialization types for weights and biases
 typedef enum {
-    NN_INIT_UNIFORM_SYM = 0, // uniform in [-scale, +scale]
-    NN_INIT_XAVIER      = 1,
-    NN_INIT_HE          = 2
+    NN_INIT_UNIFORM_SYM = 0, // Uniform distribution in the range [-scale, scale)
+    NN_INIT_XAVIER      = 1, // Xavier/Glorot initialization
+    NN_INIT_HE          = 2 // He initialization
 } nn_init_t;
 
 // Optimizer (SGD v1)
@@ -51,6 +51,6 @@ typedef struct {
 
 #ifdef __cplusplus
 }
-#endif
+#endif // end of C linkage
 
-#endif
+#endif // end of include guard
