@@ -1,0 +1,17 @@
+{
+  "name": "xor_wide_tanh",
+  "max_layers": 4,
+  "max_width": 16,
+  "input_dim": 2,
+  "layers": [
+    {"out_dim": 8, "activation": "tanh"},
+    {"out_dim": 1, "activation": "sigmoid"}
+  ],
+  "init": "xavier",
+  "seed": 777,
+  "loss": "mse",
+  "lr": 0.08,
+  "epochs": 1000000,
+  "print_every": 300,
+  "mode": "spec1"
+}
