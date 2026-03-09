@@ -17,17 +17,17 @@ V4 is a lightweight and static-memory C neural network library designed to be st
 
 - Allows modularized network synthesis on a variety of FPGA platforms supported by the Vitis/Vivado suite.
 - Performance and limitations vary depending on a given FPGA device's resource utilization.
- - (note) Future versions might want to interface with a user's resource utilization reports for proper guardrails.
+  - (note) Future versions might want to interface with a user's resource utilization reports for proper guardrails.
 - Program-defined:
- - Math library for activation functions and derivative dependencies.
- - Network structure best defined from JSON files.
- - Dense (fully-connected) layers only
- - Activations: `linear`, `tanh`, `sigmoid`, `relu`
- - Loss: `mse`
- - Optimizer: plain SGD
-  Training modes:
- - Baseline SGD
- - `spec1` (1-step delayed speculative-style schedule)
+  - Math library for activation functions and derivative dependencies.
+  - Network structure best defined from JSON files.
+  - Dense (fully-connected) layers only
+  - Activations: `linear`, `tanh`, `sigmoid`, `relu`
+  - Loss: `mse`
+  - Optimizer: plain SGD
+  - Training modes:
+    - Baseline SGD
+    - `spec1` (1-step delayed speculative-style schedule)
 - Static arrays in core NN path (Vitis-friendly)
 
 ## Repository directory structure...
