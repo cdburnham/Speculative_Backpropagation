@@ -18,7 +18,7 @@ LIB_OBJ=$(LIB_SRC:.c=.o)
 EX_COMMON_OBJ=examples/xor_json_common.o
 
 # Executables produced by this Makefile.
-ALL_BINS=xor_train xor_json_from_file xor_json_suite xor_compare_csv
+ALL_BINS=xor_train xor_json_from_file xor_json_suite xor_compare_csv fpga_spec_loop
 
 # Default target: build all binaries.
 all: $(ALL_BINS)
@@ -43,6 +43,11 @@ xor_compare_csv: $(LIB_OBJ) examples/xor_compare_csv.o
 	# Link all needed objects into the final executable.
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Build fpga_spec_loop from core objects and its main object.
+fpga_spec_loop: $(LIB_OBJ) examples/fpga_spec_loop.o
+	# Link all needed objects into the final executable.
+	$(CC) $(CFLAGS) -o $@ $^
+
 # Explicit compile rule for xor_compare_csv source.
 examples/xor_compare_csv.o: examples/xor_compare_csv.c
 	# -c compiles to object file only; $< = first prerequisite
@@ -56,4 +61,4 @@ examples/xor_compare_csv.o: examples/xor_compare_csv.c
 # Remove generated object files and binaries.
 clean:
 	# -f ignores missing files; clean and idempotent.
-	rm -f $(LIB_OBJ) $(EX_COMMON_OBJ) examples/xor_train.o examples/xor_json_from_file.o examples/xor_json_suite.o examples/xor_compare_csv.o $(ALL_BINS)
+	rm -f $(LIB_OBJ) $(EX_COMMON_OBJ) examples/xor_train.o examples/xor_json_from_file.o examples/xor_json_suite.o examples/xor_compare_csv.o examples/fpga_spec_loop.o $(ALL_BINS)

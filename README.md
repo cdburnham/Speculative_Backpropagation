@@ -8,6 +8,7 @@
 
 - V1 V2, and V3 have been archived due to deprecation and were removed from the active codebase.
 - V4 is the active and supported implementation.
+- Legacy reference documentation is available in `LEGACY_V1_V2_V3.md`.
 
 This repository now focuses on V4 compatible with HLS.
 
