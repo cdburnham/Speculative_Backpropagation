@@ -1,4 +1,3 @@
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -23,13 +22,6 @@ static const nn_scalar_t XOR_Y[XOR_SAMPLES * XOR_OUTPUTS] = {
     1,
     0
 };
-
-static volatile sig_atomic_t g_keep_running = 1;
-
-static void handle_sigint(int signum) {
-    (void)signum;
-    g_keep_running = 0;
-}
 
 static nn_scalar_t xor_dataset_loss(nn_net_t* net, nn_loss_t loss) {
     nn_scalar_t out[XOR_OUTPUTS];
@@ -86,17 +78,15 @@ int main(int argc, char** argv) {
 
     opt.lr = lr;
 
-    signal(SIGINT, handle_sigint);
-
-    printf("Starting indefinite speculative training loop.\n");
+    printf("Starting speculative training loop (infinite).\n");
     printf("Model: inline 2-4-1 (tanh -> sigmoid)\n");
     printf("Mode: spec1\n");
     printf("Epochs per block: %d\n", epochs_per_block);
     printf("Print every: %d\n", print_every);
     printf("Learning rate: %.6f\n", (double)opt.lr);
-    printf("Stop with Ctrl+C.\n\n");
+    printf("Stop by terminating the app, halting the target, or resetting the board.\n\n");
 
-    while (g_keep_running) {
+    while (1) {
         nn_scalar_t loss;
         nn_scalar_t out[XOR_OUTPUTS];
 
@@ -134,7 +124,5 @@ int main(int argc, char** argv) {
         printf("\n");
     }
 
-    printf("Stopped by user. Final total epochs: %lld\n", total_epochs);
-    nn_net_free(&net);
     return 0;
 }
